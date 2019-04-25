@@ -56,4 +56,3 @@ stats = "C:\\Users\\eiarhabi\\Documents\\ArcGIS\\Default.gdb\\detroit_SpatialJoi
 arcpy.SpatialJoin_analysis(detroit, point, stats)
 
 
-hi
