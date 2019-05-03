@@ -6,7 +6,7 @@ env.workspace = "C:\Users\seong\Desktop\Seonghun\GEOG 380\Final Project"
 arcpy.Addfield_management("point", "assaults", "TEXT")
 
 #Using Cursor to validate and assign values into the "assault" field
-with arcpy.da.UpdateCursor("point", ['Offence Ca', 'assaults']) as cursor:
+with arcpy.da.UpdateCursor("point", ['Offense Ca', 'assaults']) as cursor:
     #using for loop to loop through the "Offence Ca" to find all the "ASSAULT" and assigning them into new "assault" field.
     for row in cursor:
         if row[0] == "ASSAULT":
@@ -43,6 +43,22 @@ with arcpy.da.UpdateCursor("point", ['Offence Ca', 'Burg_Theft']) as cursor:
             row[1] = "Stolen"
             cursor.updateRow(row)
 
+#Creating a new field for Hour data format compatible with QGIS's Time Manager Plugin
+arcpy.Addfield_management("point", "QGISTime", "TEXT")
+
+#Using Cursor to validate and assign values into the "QGISTime" field
+with arcpy.da.UpdateCursor("point", ['Hour of Da', 'QGISTime']) as cursor:
+    #using for loop to loop through the "Offence Ca" to find all the burgalary/stolen related crimes and assigning them into the "Burg_Theft" field.
+    for row in cursor:
+        hour = row[0]
+        if hour < 10:
+            hour = 0 + str(hour)
+        else:
+            hour = str(hour)
+        row[1] = hour + ":00:00"
+        cursor.updateRow(row)
+
+
 arcpy.Statistics_analysis("point")....
 
 
@@ -54,5 +70,9 @@ stats = "C:\\Users\\eiarhabi\\Documents\\ArcGIS\\Default.gdb\\detroit_SpatialJoi
 
 # Process: Spatial Join
 arcpy.SpatialJoin_analysis(detroit, point, stats)
+
+# Process: Make A separate feature layer with only the type of attribute previously assigned
+arcpy.MakeFeatureLayer_management("point", "point_assult", "assaults = 'assult'")
+arcpy.FeatureClassToShapefile_conversion("point_assult","C:/users/eiarhabi/downloads")
 
 
