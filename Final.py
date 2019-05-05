@@ -2,10 +2,14 @@ import arcpy
 from arcpy import env
 env.workspace = "C:\Users\seong\Desktop\Seonghun\GEOG 380\Final Project"
 
+# in the `Data` folder
+# `point.shp` is the shapefile for the crime points
+# `Detroit Neighborhood` folder contains the shpaefile of Detroit neighborhoods
+
 #Creating a new field for "Assault" type of crime
 arcpy.Addfield_management("point", "assaults", "TEXT")
 
-#Using Cursor to validate and assign values into the "assault" field
+#Using Cursor to validate and assign values into the "assault" field 
 with arcpy.da.UpdateCursor("point", ['Offense Ca', 'assaults']) as cursor:
     #using for loop to loop through the "Offense Ca" to find all the "ASSAULT" and assigning them into new "assault" field.
     for row in cursor:
@@ -57,10 +61,6 @@ with arcpy.da.UpdateCursor("point", ['Hour of Da', 'QGISTime']) as cursor:
             hour = str(hour)
         row[1] = hour + ":00:00"
         cursor.updateRow(row)
-
-
-#arcpy.Statistics_analysis("point")....
-
 
 
 # Local variables:
