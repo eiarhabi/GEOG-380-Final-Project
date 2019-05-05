@@ -71,6 +71,13 @@ stats = "C:\\Users\\eiarhabi\\Documents\\ArcGIS\\Default.gdb\\detroit_SpatialJoi
 # Process: Spatial Join
 arcpy.SpatialJoin_analysis(detroit, point, stats)
 
+# Process: Count crime density in each neighborhood, which is number of crimes devidede by number of acres.
+arcpy.AddField_management("detroit_SpatialJoin",'density',"DOUBLE")
+with arcpy.da.UpdateCursor("detroit_SpatialJoin",['join_count','arces','density']) as cursor:
+    for row in cursor:
+        row[2] = row[0] / row[1]
+        cursor.updateRow(row)
+
 # Process: Make A separate feature layer with only the type of attribute previously assigned
 arcpy.MakeFeatureLayer_management("point", "point_assult", "assaults = 'assult'")
 arcpy.FeatureClassToShapefile_conversion("point_assult","C:/users/eiarhabi/downloads")
