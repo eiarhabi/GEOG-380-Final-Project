@@ -7,7 +7,7 @@ arcpy.Addfield_management("point", "assaults", "TEXT")
 
 #Using Cursor to validate and assign values into the "assault" field
 with arcpy.da.UpdateCursor("point", ['Offense Ca', 'assaults']) as cursor:
-    #using for loop to loop through the "Offence Ca" to find all the "ASSAULT" and assigning them into new "assault" field.
+    #using for loop to loop through the "Offense Ca" to find all the "ASSAULT" and assigning them into new "assault" field.
     for row in cursor:
         if row[0] == "ASSAULT":
             row[1] = "Assault"
@@ -35,7 +35,7 @@ with arcpy.da.UpdateCursor("point",['Hour of Da', 'Time']) as cursor:
 arcpy.Addfield_management("point", "Burg_Theft", "TEXT")
 
 #Using Cursor to validate and assign values into the "Burg_Theft" field
-with arcpy.da.UpdateCursor("point", ['Offence Ca', 'Burg_Theft']) as cursor:
+with arcpy.da.UpdateCursor("point", ['Offense Ca', 'Burg_Theft']) as cursor:
     #using for loop to loop through the "Offence Ca" to find all the burgalary/stolen related crimes and assigning them into the "Burg_Theft" field.
     for row in cursor:
         name = row[0]
@@ -48,18 +48,18 @@ arcpy.Addfield_management("point", "QGISTime", "TEXT")
 
 #Using Cursor to validate and assign values into the "QGISTime" field
 with arcpy.da.UpdateCursor("point", ['Hour of Da', 'QGISTime']) as cursor:
-    #using for loop to loop through the "Offence Ca" to find all the burgalary/stolen related crimes and assigning them into the "Burg_Theft" field.
+    #using for loop to loop through the "Offense Ca" to find all the burgalary/stolen related crimes and assigning them into the "Burg_Theft" field.
     for row in cursor:
         hour = row[0]
         if hour < 10:
-            hour = 0 + str(hour)
+            hour = "0" + str(hour)
         else:
             hour = str(hour)
         row[1] = hour + ":00:00"
         cursor.updateRow(row)
 
 
-arcpy.Statistics_analysis("point")....
+#arcpy.Statistics_analysis("point")....
 
 
 
